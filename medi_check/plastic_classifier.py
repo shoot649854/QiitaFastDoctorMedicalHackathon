@@ -5,7 +5,6 @@ st.title('Symptom Checker')
 # Add search bar for symptom input
 symptoms = st.text_input('Enter your symptoms:')
 
-# Add a button to initiate the search
 if st.button('Search'):
     # Perform search based on symptoms
     # Replace this with your actual search logic
