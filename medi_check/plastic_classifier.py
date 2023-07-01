@@ -1,4 +1,5 @@
 import streamlit as st
+from audiorecorder import audiorecorder
 
 st.title('Symptom Checker')
 
@@ -13,3 +14,13 @@ if st.button('Search'):
     # Display search results
     for result in search_results:
         st.write(result)
+
+st.title ("大切な情報を録音しよう！")
+audio = audiorecorder("ここを押して録音する", "録音中")
+
+if len(audio) > 0:
+
+    st.audio(audio.tobytes())
+
+    wav_file = open("audio.mp3", "wb")
+    wav_file.write(audio.tobytes())

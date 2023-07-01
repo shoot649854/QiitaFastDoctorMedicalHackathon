@@ -73,11 +73,3 @@ basis for appeal in case of medical malpractice accusations.
             temperature = 0
         )
         return res.choices[0].text
-
-
-
-
-
-
-
-#死ねよpython
