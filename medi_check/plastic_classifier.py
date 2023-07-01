@@ -1,13 +1,15 @@
 import streamlit as st
 
-with st.form("my_form"):
-   st.write("Inside the form")
-   slider_val = st.slider("Form slider")
-   checkbox_val = st.checkbox("Form checkbox")
+st.title('Symptom Checker')
 
-   # Every form must have a submit button.
-   submitted = st.form_submit_button("Submit")
-   if submitted:
-       st.write("slider", slider_val, "checkbox", checkbox_val)
+# Add search bar for symptom input
+symptoms = st.text_input('Enter your symptoms:')
 
-st.write("Outside the form")
+if st.button('Search'):
+    # Perform search based on symptoms
+    # Replace this with your actual search logic
+    search_results = perform_search(symptoms)
+    
+    # Display search results
+    for result in search_results:
+        st.write(result)
