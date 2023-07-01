@@ -3,9 +3,9 @@ import openai
 import pandas as pd
 from InfoProcessor import *
 from SOAP_converter import *
-file_path = "./SOAP/"
 
 def main():
+    file_path = "./SOAP/"
     soap = SOAP_Converter()
     print(soap.get_objective(prompt))
     print("GET: soap.get_objective() ")

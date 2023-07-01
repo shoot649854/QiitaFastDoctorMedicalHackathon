@@ -1,5 +1,7 @@
 import streamlit as st
 from audiorecorder import audiorecorder
+import os
+import base64
 
 path = os.path.dirname(__file__)
 
