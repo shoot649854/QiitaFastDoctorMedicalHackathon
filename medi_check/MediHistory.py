@@ -1,10 +1,6 @@
 import streamlit as st
 from PIL import Image
 from streamlit.elements.plotly_chart import SHARING_MODES
-# import tensorflow as tf
-# from tensorflow import keras
-# from tensorflow.keras.optimizers import RMSprop
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from PIL import Image, ImageOps
 import numpy as np
 import base64
