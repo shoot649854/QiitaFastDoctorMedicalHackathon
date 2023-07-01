@@ -74,4 +74,3 @@ basis for appeal in case of medical malpractice accusations.
         )
         return res.choices[0].text
 
-
