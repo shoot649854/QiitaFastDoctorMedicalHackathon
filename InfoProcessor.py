@@ -1,0 +1,31 @@
+import pandas as pd
+import os
+import glob
+import shutil
+from datetime import datetime
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+from SOAP_converter import *
+soap = SOAP_Converter()
+
+class InfoProcessor:
+    def __init__(self):
+        self.year = 2023
+
+    def create_initial_type(self, prompt):
+        data = {
+            'name': [soap.get_assessment(prompt)], 
+            'subjective': [soap.get_subjective(prompt)], 
+            'objective': [soap.get_objective(prompt)]
+        }
+        return pd.DataFrame(data)
+    
+    def save_file(self, df, file_path):
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+
+        file_path = file_path + f"{self.year}-category.csv"
+        df.to_csv(file_path, index=False)
