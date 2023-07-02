@@ -2,6 +2,9 @@ import streamlit as st
 import subprocess
 import openai
 import qrcode
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
 openai.api_key = "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"
 model_name = "gpt-3.5-turbo"
@@ -24,18 +27,38 @@ def read_file_as_string(file_path):
 # 病院のカルテ形式で項目を表示する
 def generate_medical_records(records):
     generated_text = ""
-    records = records + "の内容をカルテのようにまとめて"
+    records = records + "の内容をカルテのようにまとめて。"
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "user", "content": records}
         ],
-        max_tokens=200,
+        max_tokens=1000,
         temperature=0.7,
     )
     completion = response.choices[0].message.content.strip()
     generated_text += completion
     return generated_text
+
+def text_to_pdf(input_file, output_file):
+    # 1. Register the font
+    # pdfmetrics.registerFont(TTFont('IPA Gothic', 'ipag.ttf'))
+
+    # 2. Create a new PDF with Reportlab
+    c = canvas.Canvas(output_file)
+
+    # 3. Set the font to the registered font
+
+    # 4. Open the text file
+    with open(input_file, 'r', encoding='utf-8') as txt_file:
+        lines = txt_file.readlines()
+
+    # 5. Draw the lines to the PDF
+    for i, line in enumerate(lines):
+        c.drawString(15, 800 - i * 15, line.strip())
+
+    # 6. Save the PDF
+    c.save()
 
 st.title('Symptom Checker')
 
@@ -58,16 +81,16 @@ basic_disease = st.text_area("質問: 基礎疾患を入力してください")
 # Submit button
 if st.button("Submit"):
     # Process the form data
-    record_txt("腹痛、熱")
-    record_txt("20")
-    record_txt("男")
-    record_txt("青森県十和田市")
-    record_txt("なし")
-    record_txt("O")
-    record_txt("160cm 50kg")
-    record_txt("なし")
-    record_txt("なし")
-    record_txt("おたふく")
+    record_txt(basic_address)
+    record_txt(hospital)
+    record_txt(bloodtype)
+    record_txt(physical_info)
+    record_txt(medicine)
+    record_txt(allergy)
+    record_txt(med_his)
+    record_txt(essay_question)
+    record_txt(basic_disease)
+    record_txt(gender_question)
     
     # テキストファイルから項目を読み込んでカルテを生成する
     file_path = "record.txt"  # テキストファイルのパス
@@ -85,6 +108,6 @@ if st.button("Submit"):
     with open(output_file_path, "w") as output_file:
         output_file.write(generated_text)
 
-    
+    text_to_pdf('clinic_record.txt', 'clinic_record.pdf')
     # Move to another file or app using subprocess
     subprocess.Popen(["streamlit", "run", "front_page.py"])
