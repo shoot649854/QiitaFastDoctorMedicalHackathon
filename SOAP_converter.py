@@ -52,7 +52,7 @@ and diagnostic procedures like auscultation, palpation, visual examination, bloo
 subjective: """ + str(subjective) + """
 
 objective: """ + str(objective)
-        prompt = "find Assessment within 30 words:" + prompt
+        prompt = "find Assessment within 30 words:"
         res = openai.Completion.create(
             model = "text-davinci-003",
             prompt = prompt,

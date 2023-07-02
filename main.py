@@ -17,6 +17,7 @@ def main():
     print("CREATE: soap.get_objective(prompt) ")
 
     assessment = soap.get_assessment(subjective, objective)
+    print(assessment)
     print("CREATE: soap.get_assessment(subjective, objective) ")
 
     info.save_file(info.create_plan("patient-1", 
