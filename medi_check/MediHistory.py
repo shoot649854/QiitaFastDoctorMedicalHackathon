@@ -2,8 +2,65 @@ import streamlit as st
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import datetime
-import pandas as pd 
-from datetime import date
+import os
+import base64
+import subprocess
+
+def get_base64(bin_file):
+    with open(bin_file, 'rb') as f:
+       data = f.read()
+    return base64.b64encode(data).decode()
+
+def set_background(png_file):
+    bin_str = get_base64(png_file)
+    page_bg_img = f'''
+    <style>
+    @font-face {{
+        font-family: 'DejaVuSerif-BoldItalic';
+        src: url('fonts/DejaVuSerif-BoldItalic.ttf') format('truetype');
+    }}
+    .stApp {{
+        background-image: url("data:image/png;base64,{bin_str}");
+        background-size: cover;
+    }}
+    .title {{
+        text-align: center;
+        font-family: 'DejaVuSerif-BoldItalic', serif;
+        font-size: 75px;
+        margin-top: 70px;
+        margin-bottom: 50px;
+    }}
+    .button-container {{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }}
+    .button {{
+        
+        display: block;
+        width: 200%;
+        font-size: 32px;
+        padding: 20px 30px;
+        background-color: #4c87bf;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 20px;
+    }}
+    .button:hover {{
+        background-color: #366b9c;
+    }}
+    .button:active {{
+        transform: scale(0.98);
+    }}
+    </style>
+    '''
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
+path = os.path.dirname(__file__)
+set_background(path + '/Medical_background.png')
 
 def soap_format(dataframe):
     today = date.today()
@@ -73,7 +130,11 @@ def main():
     # date_time, s, o, a, p = soap_format(dataframe)
     date_time, s, o, a, p = soap_format(dataframe)
     create_pdf(date_time, s, o, a, p)
+    st.title("SOAP Download")
 
+    import pandas as pd
+    dataframe = pd.read_csv('../SOAP/2023-category.csv')
+    st.table(dataframe)
     # Add a download button for the PDF
     with open("soap.pdf", "rb") as f:
         btn = st.download_button(
@@ -82,5 +143,7 @@ def main():
             file_name = 'soap.pdf',
             mime = 'application/pdf'
         )
-
 main()
+
+if st.button("ホームに戻る"):
+    subprocess.Popen(["streamlit", "run", "front_page.py"])
