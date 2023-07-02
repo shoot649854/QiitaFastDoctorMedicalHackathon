@@ -107,6 +107,10 @@ def main():
     date_time, s, o, a, p = soap_format()
     create_pdf(date_time, s, o, a, p)
     st.title("SOAP Download")
+
+    import pandas as pd
+    dataframe = pd.read_csv('../SOAP/2023-category.csv')
+    st.table(dataframe)
     # Add a download button for the PDF
     with open("soap.pdf", "rb") as f:
         btn = st.download_button(
