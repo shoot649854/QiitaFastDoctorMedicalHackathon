@@ -15,9 +15,28 @@ class InfoProcessor:
 
     def create_initial_type(self, prompt):
         data = {
-            'name': [soap.get_assessment(prompt)], 
+            'name': ["patient-1"], 
             'subjective': [soap.get_subjective(prompt)], 
             'objective': [soap.get_objective(prompt)]
+        }
+        return pd.DataFrame(data)
+    
+    def create_assessment(self, name, subjective, objective):
+        data = {
+            'name': ["patient-1"], 
+            'subjective': [subjective], 
+            'objective': [objective],
+            'assessment': [soap.get_assessment(subjective, objective)], 
+        }
+        return pd.DataFrame(data)
+    
+    def create_plan(self, name, subjective, objective, assessment):
+        data = {
+            'name': ["patient-1"], 
+            'subjective': [subjective], 
+            'objective': [objective],
+            'assessment': [assessment], 
+            'Plan': [soap.get_plan(assessment)]
         }
         return pd.DataFrame(data)
     

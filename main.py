@@ -6,16 +6,24 @@ from SOAP_converter import *
 
 def main():
     file_path = "./SOAP/"
-    soap = SOAP_Converter()
-    print(soap.get_objective(prompt))
-    print("GET: soap.get_objective() ")
-
+    file_path = file_path + "2023-category.csv"
+    # soap = SOAP_Converter()
     info = InfoProcessor()
-    info.save_file(info.create_initial_type(prompt), file_path)
+
+    dataframe = pd.read_csv(file_path)
+    dataframe = info.create_initial_type(prompt)
     print("CREATE: info.save_file(info.create_initial_type(prompt) ")
 
-    file_path = file_path + "2023-category.csv"
-    dataframe = pd.read_csv(file_path)
-    print(dataframe.head())
+    dataframe = info.create_assessment(dataframe['name'], 
+                                        dataframe['subjective'],
+                                        dataframe['objective'])
+    print("CREATE: info.create_assessment() ")
+    
+    info.save_file(info.create_plan(dataframe['name'], 
+                                    dataframe['subjective'],
+                                    dataframe['objective'],
+                                    dataframe['assessment']),
+                                    file_path)
+    print("CREATE: info.create_plan() ")
 
 main()

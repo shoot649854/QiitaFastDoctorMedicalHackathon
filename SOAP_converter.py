@@ -34,8 +34,8 @@ test results, and various examinations like auscultation, palpation, and imaging
     def get_objective(self, prompt):
         prompt = """
 
-Objective information in medical records includes physical findings, test results, 
-and diagnostic procedures like auscultation, palpation, visual examination, blood tests, and imaging tests.
+Objective assessment should include the process of reaching a diagnosis, providing a clear understanding and potential 
+basis for appeal in case of medical malpractice accusations.
         
 """ + prompt
         
@@ -48,13 +48,15 @@ and diagnostic procedures like auscultation, palpation, visual examination, bloo
         )
         return res.choices[0].text
     
-    def get_assessment(self, prompt):
+    def get_assessment(self, subjective, objective):
         prompt = """
 
-Objective assessment should include the process of reaching a diagnosis, providing a clear understanding and potential 
-basis for appeal in case of medical malpractice accusations.
+Objective information in medical records includes physical findings, test results, 
+and diagnostic procedures like auscultation, palpation, visual examination, blood tests, and imaging tests.
         
-""" + prompt
+subjective: """ + str(subjective) + """
+
+objective: """ + str(objective)
         prompt = "find Assessment within 30 words:" + prompt
         res = openai.Completion.create(
             model = "text-davinci-003",
@@ -64,8 +66,8 @@ basis for appeal in case of medical malpractice accusations.
         )
         return res.choices[0].text
     
-    def get_plan(self, prompt):
-        prompt = "find how to plan treatment for this patient:" + prompt
+    def get_plan(self, assessment):
+        prompt = "find how to plan treatment for this patient based on assessment:" + str(assessment)
         res = openai.Completion.create(
             model = "text-davinci-003",
             prompt = prompt,
