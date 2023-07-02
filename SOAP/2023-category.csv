@@ -1,4 +1,4 @@
-name,subjective,objective
-patient-1,"
+name,subjective,objective,assessment,Plan
+patient-1,"Patient's physical findings, test results, and various examinations like auscultation, palpation, and imaging tests.","Objective information includes medical records, laboratory results, imaging studies, and other diagnostic tests.",,"
 
-Subjective information: patient's physical findings, test results, fever, phlegmatic cough, sore throat, clear consciousness, BP 120/56, pulse 70/min, SpO2 97%, positive for A by rapid influenza diagnostic kit, chest auscultation was normal, pharynx was red and swollen, diagnosis of influenza A, symptomatic treatment using non-steroidal anti-inflammatory analgesics, antitussive expectorants, and other drugs.",
+The first step in planning treatment for a patient based on assessment is to identify the patient's needs and goals. This includes gathering information about the patient's medical history, current symptoms, lifestyle, and any other relevant factors. Once the patient's needs and goals are identified, the next step is to develop a treatment plan that is tailored to the individual patient. This plan should include a combination of therapies, medications, lifestyle changes, and other interventions that are designed to help the patient reach their goals. The plan should also include regular follow-up visits to monitor progress and adjust the plan as needed."

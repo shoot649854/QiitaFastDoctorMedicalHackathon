@@ -16,11 +16,10 @@ class SOAP_Converter:
 
     def get_subjective(self, prompt):
         prompt = """
-
 Subjective information in medical records includes patient's physical findings, 
-test results, and various examinations like auscultation, palpation, and imaging tests.
+test results, and various examinations like auscultation, palpation, and imaging tests:
         
-""" + prompt
+""" 
 
         prompt = "find subjective information within 30 words:" + prompt
         res = openai.Completion.create(
@@ -33,12 +32,9 @@ test results, and various examinations like auscultation, palpation, and imaging
     
     def get_objective(self, prompt):
         prompt = """
-
 Objective assessment should include the process of reaching a diagnosis, providing a clear understanding and potential 
-basis for appeal in case of medical malpractice accusations.
-        
-""" + prompt
-        
+basis for appeal in case of medical malpractice accusations:
+"""
         prompt = "find Objective information within 30 words:" + prompt
         res = openai.Completion.create(
             model = "text-davinci-003",
@@ -50,7 +46,6 @@ basis for appeal in case of medical malpractice accusations.
     
     def get_assessment(self, subjective, objective):
         prompt = """
-
 Objective information in medical records includes physical findings, test results, 
 and diagnostic procedures like auscultation, palpation, visual examination, blood tests, and imaging tests.
         

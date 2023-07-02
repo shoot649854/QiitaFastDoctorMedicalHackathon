@@ -1,8 +1,0 @@
-name,subjective,objective,assessment,Plan
-patient-1,"0    0    \n\nSubjective information: patient's phy...
-Name: subjective, dtype: object","0    0    
-Name: objective, dtype: object
-Name: objective, dtype: object","0    \nAssessment is the evaluation of physical fin...
-Name: assessment, dtype: object","
-
-The first step in planning treatment for a patient based on assessment is to identify the patient's specific needs and goals. This can be done by conducting a thorough physical examination, reviewing the patient's medical history, and discussing the patient's lifestyle and current health status. Once the patient's needs and goals have been identified, the next step is to develop a treatment plan that is tailored to the patient's individual needs. This plan should include specific goals, interventions, and strategies to help the patient achieve their desired outcomes. The plan should also include follow-up visits and assessments to monitor the patient's progress and adjust the treatment plan as needed."
