@@ -1,64 +1,7 @@
 import streamlit as st
 import subprocess
 import openai
-import os
-import base64
-
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-       data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = f'''
-    <style>
-    @font-face {{
-        font-family: 'DejaVuSerif-BoldItalic';
-        src: url('fonts/DejaVuSerif-BoldItalic.ttf') format('truetype');
-    }}
-    .stApp {{
-        background-image: url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-    }}
-    .title {{
-        text-align: center;
-        font-family: 'DejaVuSerif-BoldItalic', serif;
-        font-size: 75px;
-        margin-top: 70px;
-        margin-bottom: 50px;
-    }}
-    .button-container {{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }}
-    .button {{
-        
-        display: block;
-        width: 200%;
-        font-size: 32px;
-        padding: 20px 30px;
-        background-color: #4c87bf;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-bottom: 20px;
-    }}
-    .button:hover {{
-        background-color: #366b9c;
-    }}
-    .button:active {{
-        transform: scale(0.98);
-    }}
-    </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-path = os.path.dirname(__file__)
-set_background(path + '/Medical_background.png')
+import qrcode
 
 openai.api_key = "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"
 model_name = "gpt-3.5-turbo"
@@ -72,23 +15,26 @@ def record_txt(text):
 def read_records(file_path):
     with open(file_path, "r") as file:
         return file.readlines()
-    
+
+def read_file_as_string(file_path):
+    with open(file_path, "r") as file:
+        file_content = file.read()
+    return file_content
+   
 # 病院のカルテ形式で項目を表示する
 def generate_medical_records(records):
     generated_text = ""
-    for record in records:
-        prompt = f"Patient: {record}"
-        response = openai.ChatCompletion.create(
-            model=model_name,
-            messages=[
-                {"role": "system", "content": "You are a doctor."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=50,  # 応答の最大トークン数
-            temperature=0.7,  # 生成の多様性を調整
-        )
-        completion = response.choices[0].message.content.strip()
-        generated_text += f"AI: {completion}\n"
+    records = records + "の内容をカルテのようにまとめて"
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content": records}
+        ],
+        max_tokens=200,
+        temperature=0.7,
+    )
+    completion = response.choices[0].message.content.strip()
+    generated_text += completion
     return generated_text
 
 st.title('Symptom Checker')
@@ -126,12 +72,19 @@ if st.button("Submit"):
     # テキストファイルから項目を読み込んでカルテを生成する
     file_path = "record.txt"  # テキストファイルのパス
     records = read_records(file_path)
-    generated_text = generate_medical_records(records)
+    
+    file_path = "record.txt"
+    file_content = read_file_as_string(file_path)
+    
+    generated_text = generate_medical_records(file_content)
+    
+    
 
     # カルテをファイルに書き込む
     output_file_path = "clinic_record.txt"  # 出力ファイルのパス
     with open(output_file_path, "w") as output_file:
         output_file.write(generated_text)
+
     
     # Move to another file or app using subprocess
     subprocess.Popen(["streamlit", "run", "front_page.py"])
