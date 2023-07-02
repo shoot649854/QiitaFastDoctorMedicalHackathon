@@ -16,29 +16,30 @@ def read_records(file_path):
         return file.readlines()
     
 # 病院のカルテ形式で項目を表示する
-def display_medical_records(records):
+def generate_medical_records(records):
+    generated_text = ""
     for record in records:
         prompt = f"Patient: {record}"
-        response = openai.Completion.create(
-            engine=model_name,
-            prompt=prompt,
+        response = openai.ChatCompletion.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": "You are a doctor."},
+                {"role": "user", "content": prompt}
+            ],
             max_tokens=50,  # 応答の最大トークン数
-            n=1,  # 生成する応答の数
-            stop=None,  # 応答の終了条件
             temperature=0.7,  # 生成の多様性を調整
         )
-        completion = response.choices[0].text.strip()
-        print(f"AI: {completion}")
-
-    
+        completion = response.choices[0].message.content.strip()
+        generated_text += f"AI: {completion}\n"
+    return generated_text
 
 st.title('Symptom Checker')
 
 # Essay-type question
-basic_address = st.text_area(" 質問: 住所")
+basic_address = st.text_area("質問: 住所")
 hospital = st.text_area("質問: かかりつけの病院（任意）")
 bloodtype = st.text_area("質問: 血液型")
-physical_info = st.text_area(" 質問: 身長(cm), 体重（kg）")
+physical_info = st.text_area("質問: 身長(cm), 体重（kg）")
 medicine = st.text_area("質問: 内服薬")
 allergy = st.text_area("質問: アレルギー")
 med_his = st.text_area("質問: 既往歴(箇条書きでも構いません）")
@@ -50,16 +51,9 @@ gender_question = st.text_area("質問: 性別を入力してください")
 
 basic_disease = st.text_area("質問: 基礎疾患を入力してください")
 
-
-
-# 住所　担当医（どこの病院の）血液型　身長体重　内服薬　アレルギー　既往歴
-
-
-
 # Submit button
 if st.button("Submit"):
     # Process the form data
-    st.write("Submitted Answers:")
     record_txt("腹痛、熱")
     record_txt("20")
     record_txt("男")
@@ -74,13 +68,12 @@ if st.button("Submit"):
     # テキストファイルから項目を読み込んでカルテを生成する
     file_path = "record.txt"  # テキストファイルのパス
     records = read_records(file_path)
-    generated_text = display_medical_records(records)
+    generated_text = generate_medical_records(records)
 
     # カルテをファイルに書き込む
     output_file_path = "clinic_record.txt"  # 出力ファイルのパス
     with open(output_file_path, "w") as output_file:
         output_file.write(generated_text)
     
-
     # Move to another file or app using subprocess
-    subprocess.Popen(["streamlit", "run", "another.py"])
+    subprocess.Popen(["streamlit", "run", "front_page.py"])
