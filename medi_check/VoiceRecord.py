@@ -61,7 +61,6 @@ def set_background(png_file):
 
 path = os.path.dirname(__file__)
 set_background(path + '/Medical_background.png')
-
 def transcribe_and_save(audio_path):
     openai.api_key = "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"
     GPT_MODEL = "gpt-3.5-turbo"
@@ -98,4 +97,3 @@ if len(audio) > 0:
 
 if st.button("ホームに戻る"):
     subprocess.Popen(["streamlit", "run", "front_page.py"])
-
