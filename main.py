@@ -9,20 +9,21 @@ def main():
     file_path = file_path + "2023-category.csv"
     # soap = SOAP_Converter()
     info = InfoProcessor()
+    soap = SOAP_Converter()
 
-    dataframe = pd.read_csv(file_path)
-    dataframe = info.create_initial_type(prompt)
-    print("CREATE: info.save_file(info.create_initial_type(prompt) ")
+    subjective = soap.get_subjective(prompt)
+    print("CREATE: soap.get_subjective(prompt) ")
+    objective = soap.get_objective(prompt)
+    print("CREATE: soap.get_objective(prompt) ")
 
-    dataframe = info.create_assessment(dataframe['name'], 
-                                        dataframe['subjective'],
-                                        dataframe['objective'])
-    print("CREATE: info.create_assessment() ")
-    
-    info.save_file(info.create_plan(dataframe['name'], 
-                                    dataframe['subjective'],
-                                    dataframe['objective'],
-                                    dataframe['assessment']),
+    assessment = soap.get_assessment(subjective, objective)
+    print(assessment)
+    print("CREATE: soap.get_assessment(subjective, objective) ")
+
+    info.save_file(info.create_plan("patient-1", 
+                                    subjective, 
+                                    objective,
+                                    assessment),
                                     file_path)
     print("CREATE: info.create_plan() ")
 

@@ -41,10 +41,6 @@ class InfoProcessor:
         return pd.DataFrame(data)
     
     def save_file(self, df, file_path):
-        today = datetime.now().strftime("%Y-%m-%d")
-
-        if not os.path.exists(file_path):
-            os.makedirs(file_path)
-
-        file_path = file_path + f"{self.year}-category.csv"
+        # if not os.path.exists(file_path):
+        #     os.makedirs(file_path)
         df.to_csv(file_path, index=False)

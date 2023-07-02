@@ -1,4 +1,14 @@
-name,subjective,objective
-patient-1,"
+name,subjective,objective,assessment,Plan
+patient-1,"Patient's physical findings, test results, and various examinations like auscultation, palpation, and imaging tests.","Objective information includes medical records, laboratory results, imaging studies, and other diagnostic tests.","
 
-Subjective information: patient's physical findings, test results, fever, phlegmatic cough, sore throat, clear consciousness, BP 120/56, pulse 70/min, SpO2 97%, positive for A by rapid influenza diagnostic kit, chest auscultation was normal, pharynx was red and swollen, diagnosis of influenza A, symptomatic treatment using non-steroidal anti-inflammatory analgesics, antitussive expectorants, and other drugs.",
+Process of evaluating and measuring a person's knowledge, skills, and abilities.","
+
+1. Gather information: Collect information about the patient's medical history, current symptoms, and lifestyle.
+
+2. Assess: Assess the patient's physical and mental health, including any existing conditions or medications.
+
+3. Diagnose: Diagnose the patient's condition based on the information gathered and the assessment.
+
+4. Develop a treatment plan: Develop a treatment plan that is tailored to the patient's individual needs and goals.
+
+5. Monitor progress: Monitor the patient's progress and adjust the treatment plan as needed."
