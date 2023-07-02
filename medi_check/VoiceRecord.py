@@ -1,47 +1,29 @@
 import streamlit as st
+import subprocess
 from audiorecorder import audiorecorder
-import os
-import base64
+import openai
+import datetime 
 
-path = os.path.dirname(__file__)
-
-st.title(' ')
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-       data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = '''
-        <style>
-    .stApp {
-    background-image: url("data:image/png;base64,%s");
-    background-size: cover;
-    }
-    </style>
-        ''' % bin_str
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-set_background(path+'/background.png')
-
-
-def teachable_machine_classification(img, file):
-    np.set_printoptions(suppress=True)
-    model = keras.models.load_model(file)
-    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-    image = img
-    size = (224, 224)
-    image = ImageOps.fit(image, size, Image.ANTIALIAS)
-    image_array = np.asarray(image)
-    normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
-    st.write("Start Predection...")
-    data[0] = normalized_image_array
+def transcribe_and_save(audio_path):
+    openai.api_key = "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"
+    GPT_MODEL = "gpt-3.5-turbo"
     
-    # Display search results
-    for result in search_results:
-        st.write(result)
+    # オーディオファイルを開く
+    audio_file = open(audio_path, "rb")
 
+    # Whisperで音声から文字起こし
+    transcript = openai.Audio.transcribe("whisper-1", audio_file)
+
+    # 現在の日付と時刻を取得
+    now = datetime.datetime.now()
+    
+    # 結果をテキストファイルに保存
+    with open('transcription.txt', 'w') as f:
+        # 日付と時刻を書き込む
+        f.write('Date and Time: ' + now.strftime("%Y-%m-%d %H:%M:%S") + '\n\n')
+        f.write(transcript.text)
+
+# Add a title to your app
 st.title ("大切な情報を録音しよう！")
 audio = audiorecorder("ここを押して録音する", "録音中")
 
@@ -49,6 +31,9 @@ if len(audio) > 0:
 
     st.audio(audio.tobytes())
 
-    wav_file = open("audio.mp3", "wb")
+    audio_path = "record.mp3"
+    wav_file = open(audio_path, "wb")
     wav_file.write(audio.tobytes())
+    wav_file.close()
 
+    transcribe_and_save(audio_path)
