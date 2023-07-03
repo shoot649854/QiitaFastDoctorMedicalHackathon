@@ -3,7 +3,8 @@ import openai
 from InfoProcessor import *
 
 # os.environ['YOUR_ORG_ID'] = 'org-oiM21elw8g8djxaJXJPJj2rT'
-os.environ['OPENAI_API_KEY'] = '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'
+# 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
+os.environ['OPENAI_API_KEY'] = 'API KEY'
 openai.api_key = os.environ['OPENAI_API_KEY']
 openai.Model.list()
 
