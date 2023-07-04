@@ -7,6 +7,8 @@ Doctors spend a significant amount of time on paperwork and filling out medical 
 ## Solution Approach: Visual Check
 Our approach centers around reducing paperwork and streamlining processes to make better use of doctors' time. We introduce a visual check system as an architectural solution.
 
+<img width="665" alt="Screenshot 2023-07-04 at 13 31 17" src="https://github.com/shoot649854/MediCheck_Hackthon/assets/103382369/d16e4486-36e3-4cf1-8b3d-6dd25aa1a1a1">
+
 ## User Input
 Patients sometimes exaggerate their symptoms to ensure they are taken seriously. While it's essential to address their concerns, it is also crucial to prioritize patients based on their medical needs. Our system helps doctors efficiently assess patients, ensuring that appropriate attention is given to each individual.
 
@@ -14,6 +16,8 @@ Patients sometimes exaggerate their symptoms to ensure they are taken seriously.
 We have observed a lack of information sharing within and between medical facilities. To address this, we propose that patients maintain their health data. While ensuring data confidentiality and adhering to government regulations, we aim to solve encryption and high-security challenges for each person's information.
 
 By standardizing health history information in the SOAP format (Subjective, Objective, Assessment, Plan), we enable effective sharing of patient data. This standardized approach minimizes gaps in information transfer and differences in documentation styles among healthcare providers.
+
+<img width="708" alt="Screenshot 2023-07-04 at 13 31 39" src="https://github.com/shoot649854/MediCheck_Hackthon/assets/103382369/669876b6-0bbb-43a4-83cd-a62f75125242">
 
 ## Project Goals
 Optimize doctors' time by reducing paperwork and administrative tasks.
